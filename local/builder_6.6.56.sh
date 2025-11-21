@@ -148,7 +148,6 @@ elif [[ "$KSU_BRANCH" == "n" || "$KSU_BRANCH" == "N" ]]; then
   cp ./susfs4ksu/kernel_patches/fs/* ./common/fs/
   cp ./susfs4ksu/kernel_patches/include/linux/* ./common/include/linux/
   cp ./kernel_patches/next/scope_min_manual_hooks_v1.5.patch ./common/
-  fi
   cp ./kernel_patches/69_hide_stuff.patch ./common/
   cd ./common
   patch -p1 < 50_add_susfs_in_gki-android15-6.6.patch || true
@@ -170,10 +169,10 @@ elif [[ "$KSU_BRANCH" == "m" || "$KSU_BRANCH" == "M" ]]; then
   cp ./susfs4ksu/kernel_patches/include/linux/* ./common/include/linux/
   cp ./SukiSU_patch/69_hide_stuff.patch ./common/
   cd ./KernelSU
-  #为MKSU修正susfs 2.0.0补丁
-  sed -i 's/@@ -13,6 +13,10 @@/@@ -13,7 +13,11 @@/' 10_enable_susfs_for_ksu.patch
-  sed -i '/ #include <linux\/uaccess\.h>/ { N; s| #include <linux/uaccess\.h>\n #include <linux/version\.h>|&\n #include <linux/pid.h>| }' 10_enable_susfs_for_ksu.patch
   patch -p1 < 10_enable_susfs_for_ksu.patch || true
+  #为MKSU修正susfs 2.0.0补丁
+  wget https://github.com/cctv18/oppo_oplus_realme_sm8750/raw/refs/heads/main/other_patch/mksu_supercalls.patch
+  patch -p1 < mksu_supercalls.patch || true
   wget https://github.com/cctv18/oppo_oplus_realme_sm8750/raw/refs/heads/main/other_patch/fix_umount.patch
   patch -p1 < fix_umount.patch || true
   cd ../common
